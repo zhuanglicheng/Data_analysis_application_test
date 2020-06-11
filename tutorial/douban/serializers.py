@@ -4,10 +4,11 @@
 # 工具：PyCharm
 # 文件 :serializers.py
 # Python版本：3.5.2
-
 from rest_framework import serializers
 from douban.models import Actors
-class ActorsSerializer(serializers.ModelSerializer):
+
+
+class ActorsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Actors
         fields = ('id', 'name', 'birthday', 'birthplace', 'constellation',
