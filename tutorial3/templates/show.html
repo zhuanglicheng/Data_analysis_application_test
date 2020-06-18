@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/vue-router.js"></script>
+	<script src="/static/js/vue-resource.js"></script>
+</head>
+<body>
+{% verbatim %}
+<div id="root">
+    <input type="button" value="获取全部演员(GET)" v-on:click='getData'>
+    <h1>豆瓣演员信息列表:</h1>
+    <h3>{{result}}</h3>
+    <table border="2">
+        <tr>
+            <td>ID</td>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>生日</td>
+            <td>出生地</td>
+            <td>星座</td>
+	    </tr>
+        <tr v-for="item in ret">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.gender}}</td>
+            <td>{{item.birthday}}</td>
+            <td>{{item.birthplace}}</td>
+            <td>{{item.constellation}}</td>
+        </tr>
+    </table>
+</div>
+{% endverbatim %}
+<script>
+    var vm = new Vue({
+		el:"#root",
+		data:{
+		    url1:'/douban/method_get',
+		    result:'',
+			ret:''
+		},
+        methods:{
+            getData:function () {
+                //请求数据
+                this.$http.get(this.url1).then(function(res){
+                    this.ret = res.body;
+                    this.result="执行结果：获取全部演员列表成功!";
+                },function(res){
+                    console.log('请求失败处理');
+                    console.log(res.status);
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>
